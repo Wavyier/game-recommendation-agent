@@ -14,6 +14,8 @@ from tools import (
     get_game_details,
     get_top_games_by_platform,
     get_recent_releases,
+    get_game_awards,
+    get_game_of_the_year_history,
 )
 
 SYSTEM_PROMPT = """You are GameGuide, an expert video game recommendation assistant powered by Metacritic data.
@@ -25,6 +27,8 @@ Your role is to help users discover great games based on their preferences, plat
 2. **Get Game Details**: Provide in-depth information about specific games
 3. **Top Games by Platform**: Show the highest-rated games for any platform
 4. **Recent Releases**: Find newly released games with good reviews
+5. **Game Awards**: Look up The Game Awards winners by year and category (2019-2025)
+6. **GOTY History**: See all Game of the Year winners throughout history
 
 ## Guidelines:
 - Always consider the user's preferred gaming platform (PC, PS5, Xbox, Switch, etc.)
@@ -62,6 +66,8 @@ def create_game_agent() -> Agent:
             get_game_details,
             get_top_games_by_platform,
             get_recent_releases,
+            get_game_awards,
+            get_game_of_the_year_history,
         ],
     )
     

@@ -4,6 +4,8 @@ from .metacritic import (
     get_game_details,
     get_top_games_by_platform,
     get_recent_releases,
+    get_game_awards,
+    get_game_of_the_year_history,
 )
 
 __all__ = [
@@ -11,4 +13,6 @@ __all__ = [
     "get_game_details", 
     "get_top_games_by_platform",
     "get_recent_releases",
+    "get_game_awards",
+    "get_game_of_the_year_history",
 ]

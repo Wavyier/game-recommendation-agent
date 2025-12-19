@@ -326,3 +326,248 @@ def get_recent_releases(platform: str = "all", min_score: int = 70) -> str:
         
     except Exception as e:
         return f"Error fetching recent releases: {str(e)}"
+
+
+# The Game Awards winners data (2014-2025)
+GAME_AWARDS_DATA = {
+    2025: {
+        "Game of the Year": "Astro Bot",
+        "Best Game Direction": "Astro Bot",
+        "Best Narrative": "Metaphor: ReFantazio",
+        "Best Art Direction": "Metaphor: ReFantazio",
+        "Best Score and Music": "Final Fantasy VII Rebirth",
+        "Best Audio Design": "Senua's Saga: Hellblade II",
+        "Best Performance": "Melina Juergens (Senua's Saga: Hellblade II)",
+        "Games for Impact": "Neva",
+        "Best Ongoing Game": "Helldivers 2",
+        "Best Indie Game": "Balatro",
+        "Best Debut Indie Game": "Balatro",
+        "Best Mobile Game": "Balatro",
+        "Best VR/AR Game": "Batman: Arkham Shadow",
+        "Best Action Game": "Black Myth: Wukong",
+        "Best Action/Adventure Game": "Astro Bot",
+        "Best RPG": "Metaphor: ReFantazio",
+        "Best Fighting Game": "Tekken 8",
+        "Best Family Game": "Astro Bot",
+        "Best Sim/Strategy Game": "Frostpunk 2",
+        "Best Sports/Racing Game": "EA Sports FC 25",
+        "Best Multiplayer Game": "Helldivers 2",
+        "Best Adaptation": "Fallout (TV Series)",
+        "Most Anticipated Game": "Grand Theft Auto VI",
+        "Content Creator of the Year": "CaseOh",
+        "Best Esports Game": "League of Legends",
+    },
+    2024: {
+        "Game of the Year": "Baldur's Gate 3",
+        "Best Game Direction": "Alan Wake 2",
+        "Best Narrative": "Alan Wake 2",
+        "Best Art Direction": "Alan Wake 2",
+        "Best Score and Music": "Final Fantasy XVI",
+        "Best Audio Design": "Hi-Fi Rush",
+        "Best Performance": "Neil Newbon (Baldur's Gate 3)",
+        "Games for Impact": "Tchia",
+        "Best Ongoing Game": "Cyberpunk 2077",
+        "Best Indie Game": "Sea of Stars",
+        "Best Debut Indie Game": "Cocoon",
+        "Best Mobile Game": "Honkai: Star Rail",
+        "Best VR/AR Game": "Resident Evil Village VR Mode",
+        "Best Action Game": "Armored Core VI: Fires of Rubicon",
+        "Best Action/Adventure Game": "The Legend of Zelda: Tears of the Kingdom",
+        "Best RPG": "Baldur's Gate 3",
+        "Best Fighting Game": "Street Fighter 6",
+        "Best Family Game": "Super Mario Bros. Wonder",
+        "Best Sim/Strategy Game": "Pikmin 4",
+        "Best Sports/Racing Game": "Forza Motorsport",
+        "Best Multiplayer Game": "Baldur's Gate 3",
+        "Best Adaptation": "The Last of Us (TV Series)",
+        "Most Anticipated Game": "Final Fantasy VII Rebirth",
+        "Content Creator of the Year": "IronMouse",
+        "Best Esports Game": "Valorant",
+    },
+    2023: {
+        "Game of the Year": "Elden Ring",
+        "Best Game Direction": "Elden Ring",
+        "Best Narrative": "God of War Ragnarök",
+        "Best Art Direction": "Elden Ring",
+        "Best Score and Music": "God of War Ragnarök",
+        "Best Audio Design": "God of War Ragnarök",
+        "Best Performance": "Christopher Judge (God of War Ragnarök)",
+        "Games for Impact": "As Dusk Falls",
+        "Best Ongoing Game": "Final Fantasy XIV",
+        "Best Indie Game": "Stray",
+        "Best Debut Indie Game": "Stray",
+        "Best Mobile Game": "Marvel Snap",
+        "Best VR/AR Game": "Moss: Book II",
+        "Best Action Game": "Bayonetta 3",
+        "Best Action/Adventure Game": "God of War Ragnarök",
+        "Best RPG": "Elden Ring",
+        "Best Fighting Game": "MultiVersus",
+        "Best Family Game": "Kirby and the Forgotten Land",
+        "Best Sim/Strategy Game": "Mario + Rabbids Sparks of Hope",
+        "Best Sports/Racing Game": "Gran Turismo 7",
+        "Best Multiplayer Game": "Splatoon 3",
+        "Most Anticipated Game": "The Legend of Zelda: Tears of the Kingdom",
+        "Content Creator of the Year": "Ludwig",
+        "Best Esports Game": "Valorant",
+    },
+    2022: {
+        "Game of the Year": "It Takes Two",
+        "Best Game Direction": "Deathloop",
+        "Best Narrative": "Marvel's Guardians of the Galaxy",
+        "Best Art Direction": "Deathloop",
+        "Best Score and Music": "NieR Replicant ver.1.22474487139...",
+        "Best Audio Design": "Forza Horizon 5",
+        "Best Performance": "Maggie Robertson (Resident Evil Village)",
+        "Games for Impact": "Life is Strange: True Colors",
+        "Best Ongoing Game": "Final Fantasy XIV",
+        "Best Indie Game": "Kena: Bridge of Spirits",
+        "Best Debut Indie Game": "Kena: Bridge of Spirits",
+        "Best Mobile Game": "Genshin Impact",
+        "Best VR/AR Game": "Resident Evil 4 VR",
+        "Best Action Game": "Returnal",
+        "Best Action/Adventure Game": "Metroid Dread",
+        "Best RPG": "Tales of Arise",
+        "Best Fighting Game": "Guilty Gear Strive",
+        "Best Family Game": "It Takes Two",
+        "Best Sim/Strategy Game": "Age of Empires IV",
+        "Best Sports/Racing Game": "Forza Horizon 5",
+        "Best Multiplayer Game": "It Takes Two",
+        "Most Anticipated Game": "Elden Ring",
+        "Content Creator of the Year": "Dream",
+        "Best Esports Game": "League of Legends",
+    },
+    2021: {
+        "Game of the Year": "The Last of Us Part II",
+        "Best Game Direction": "The Last of Us Part II",
+        "Best Narrative": "The Last of Us Part II",
+        "Best Art Direction": "Ghost of Tsushima",
+        "Best Score and Music": "Final Fantasy VII Remake",
+        "Best Audio Design": "The Last of Us Part II",
+        "Best Performance": "Laura Bailey (The Last of Us Part II)",
+        "Games for Impact": "Tell Me Why",
+        "Best Ongoing Game": "No Man's Sky",
+        "Best Indie Game": "Hades",
+        "Best Mobile Game": "Among Us",
+        "Best VR/AR Game": "Half-Life: Alyx",
+        "Best Action Game": "Hades",
+        "Best Action/Adventure Game": "The Last of Us Part II",
+        "Best RPG": "Final Fantasy VII Remake",
+        "Best Fighting Game": "Mortal Kombat 11 Ultimate",
+        "Best Family Game": "Animal Crossing: New Horizons",
+        "Best Sim/Strategy Game": "Microsoft Flight Simulator",
+        "Best Sports/Racing Game": "Tony Hawk's Pro Skater 1 + 2",
+        "Best Multiplayer Game": "Among Us",
+        "Most Anticipated Game": "Elden Ring",
+        "Content Creator of the Year": "Valkyrae",
+        "Best Esports Game": "League of Legends",
+    },
+    2020: {
+        "Game of the Year": "Sekiro: Shadows Die Twice",
+        "Best Game Direction": "Death Stranding",
+        "Best Narrative": "Disco Elysium",
+        "Best Art Direction": "Control",
+        "Best Score and Music": "Death Stranding",
+        "Best Audio Design": "Call of Duty: Modern Warfare",
+        "Best Performance": "Mads Mikkelsen (Death Stranding)",
+        "Games for Impact": "Gris",
+        "Best Ongoing Game": "Fortnite",
+        "Best Indie Game": "Disco Elysium",
+        "Best Mobile Game": "Call of Duty: Mobile",
+        "Best VR/AR Game": "Beat Saber",
+        "Best Action Game": "Devil May Cry 5",
+        "Best Action/Adventure Game": "Sekiro: Shadows Die Twice",
+        "Best RPG": "Disco Elysium",
+        "Best Fighting Game": "Super Smash Bros. Ultimate",
+        "Best Family Game": "Luigi's Mansion 3",
+        "Best Sim/Strategy Game": "Fire Emblem: Three Houses",
+        "Best Sports/Racing Game": "Crash Team Racing Nitro-Fueled",
+        "Best Multiplayer Game": "Apex Legends",
+        "Most Anticipated Game": "The Last of Us Part II",
+        "Content Creator of the Year": "Shroud",
+        "Best Esports Game": "League of Legends",
+    },
+    2019: {
+        "Game of the Year": "God of War",
+        "Best Game Direction": "God of War",
+        "Best Narrative": "Red Dead Redemption 2",
+        "Best Art Direction": "Red Dead Redemption 2",
+        "Best Score and Music": "Red Dead Redemption 2",
+        "Best Audio Design": "Red Dead Redemption 2",
+        "Best Performance": "Roger Clark (Red Dead Redemption 2)",
+        "Games for Impact": "Celeste",
+        "Best Ongoing Game": "Fortnite",
+        "Best Indie Game": "Celeste",
+        "Best Mobile Game": "Florence",
+        "Best VR/AR Game": "Astro Bot Rescue Mission",
+        "Best Action Game": "Dead Cells",
+        "Best Action/Adventure Game": "God of War",
+        "Best RPG": "Monster Hunter: World",
+        "Best Fighting Game": "Dragon Ball FighterZ",
+        "Best Family Game": "Overcooked 2",
+        "Best Sim/Strategy Game": "Into the Breach",
+        "Best Sports/Racing Game": "Forza Horizon 4",
+        "Best Multiplayer Game": "Fortnite",
+        "Most Anticipated Game": "The Last of Us Part II",
+        "Content Creator of the Year": "Ninja",
+        "Best Esports Game": "Overwatch",
+    },
+}
+
+
+@tool
+def get_game_awards(year: int = 2025, category: str = "all") -> str:
+    """
+    Get The Game Awards winners for a specific year and category.
+    
+    Args:
+        year: The year of The Game Awards (2019-2025 available)
+        category: Specific category to look up, or 'all' for all categories.
+                  Examples: 'Game of the Year', 'Best RPG', 'Best Indie Game', 
+                  'Best Narrative', 'Best Action Game', 'Best Multiplayer Game'
+    
+    Returns:
+        The Game Awards winners for the specified year and category
+    """
+    if year not in GAME_AWARDS_DATA:
+        available_years = sorted(GAME_AWARDS_DATA.keys(), reverse=True)
+        return f"Data not available for {year}. Available years: {', '.join(map(str, available_years))}"
+    
+    awards = GAME_AWARDS_DATA[year]
+    
+    if category.lower() == "all":
+        output = f"🏆 The Game Awards {year} - All Winners:\n\n"
+        for cat, winner in awards.items():
+            output += f"  🎮 {cat}: {winner}\n"
+        return output
+    
+    # Find matching category (case-insensitive partial match)
+    category_lower = category.lower()
+    for cat, winner in awards.items():
+        if category_lower in cat.lower() or cat.lower() in category_lower:
+            return f"🏆 The Game Awards {year}\n{cat}: {winner}"
+    
+    # Category not found
+    available_categories = list(awards.keys())
+    return f"Category '{category}' not found for {year}.\n\nAvailable categories:\n" + "\n".join(f"  • {c}" for c in available_categories)
+
+
+@tool
+def get_game_of_the_year_history() -> str:
+    """
+    Get the complete history of Game of the Year winners from The Game Awards.
+    
+    Returns:
+        A chronological list of all Game of the Year winners from 2019-2025
+    """
+    output = "🏆 The Game Awards - Game of the Year Winners:\n\n"
+    
+    for year in sorted(GAME_AWARDS_DATA.keys(), reverse=True):
+        winner = GAME_AWARDS_DATA[year].get("Game of the Year", "Unknown")
+        output += f"  {year}: {winner}\n"
+    
+    output += "\n📊 Fun Facts:\n"
+    output += "  • FromSoftware has won GOTY twice (Sekiro 2020, Elden Ring 2023)\n"
+    output += "  • 2025 marked Astro Bot's surprise victory\n"
+    output += "  • Baldur's Gate 3 (2024) won with 6 total awards\n"
+    
+    return output

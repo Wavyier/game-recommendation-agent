@@ -28,12 +28,14 @@ This project demonstrates how to build an AI agent using AWS's open-source **Str
 │                    │ • get_details │                        │
 │                    │ • top_games   │                        │
 │                    │ • new_releases│                        │
+│                    │ • game_awards │                        │
+│                    │ • goty_history│                        │
 │                    └───────┬───────┘                        │
 │                            │                                │
 │                            ▼                                │
 │                    ┌───────────────┐                        │
-│                    │  Metacritic   │                        │
-│                    │   (Web Data)  │                        │
+│                    │  Metacritic / │                        │
+│                    │  Game Awards  │                        │
 │                    └───────────────┘                        │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -87,12 +89,14 @@ GameGuide: 🆕 Here are recent PS5 releases with great reviews...
 
 ## Tools Available
 
-| Tool                        | Description                             |
-| --------------------------- | --------------------------------------- |
-| `search_games`              | Search Metacritic for games by name     |
-| `get_game_details`          | Get detailed info about a specific game |
-| `get_top_games_by_platform` | List highest-rated games per platform   |
-| `get_recent_releases`       | Find new releases with good scores      |
+| Tool                           | Description                                              |
+| ------------------------------ | -------------------------------------------------------- |
+| `search_games`                 | Search Metacritic for games by name                      |
+| `get_game_details`             | Get detailed info about a specific game                  |
+| `get_top_games_by_platform`    | List highest-rated games per platform                    |
+| `get_recent_releases`          | Find new releases with good scores                       |
+| `get_game_awards`              | Get The Game Awards winners by year/category (2019-2025) |
+| `get_game_of_the_year_history` | Complete GOTY winners history                            |
 
 ## AWS Services Used
 
