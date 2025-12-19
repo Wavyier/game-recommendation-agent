@@ -328,9 +328,43 @@ def get_recent_releases(platform: str = "all", min_score: int = 70) -> str:
         return f"Error fetching recent releases: {str(e)}"
 
 
-# The Game Awards winners data (2014-2025)
+# The Game Awards winners data
+# Year corresponds to the award show year (e.g., 2025 = The Game Awards 2025, held Dec 2025)
 GAME_AWARDS_DATA = {
     2025: {
+        "Game of the Year": "Clair Obscur: Expedition 33",
+        "Best Game Direction": "Clair Obscur: Expedition 33",
+        "Best Narrative": "Clair Obscur: Expedition 33",
+        "Best Art Direction": "Clair Obscur: Expedition 33",
+        "Best Score and Music": "Clair Obscur: Expedition 33 (Lorien Testard)",
+        "Best Audio Design": "Battlefield 6",
+        "Best Performance": "Jennifer English as Maelle (Clair Obscur: Expedition 33)",
+        "Games for Impact": "South of Midnight",
+        "Best Ongoing Game": "No Man's Sky",
+        "Best Community Support": "Baldur's Gate 3",
+        "Best Indie Game": "Clair Obscur: Expedition 33",
+        "Best Debut Indie Game": "Clair Obscur: Expedition 33",
+        "Best Mobile Game": "Umamusume: Pretty Derby",
+        "Best VR/AR Game": "The Midnight Walk",
+        "Best Action Game": "Hades II",
+        "Best Action/Adventure Game": "Hollow Knight: Silksong",
+        "Best RPG": "Clair Obscur: Expedition 33",
+        "Best Fighting Game": "Fatal Fury: City of the Wolves",
+        "Best Family Game": "Donkey Kong Bananza",
+        "Best Sim/Strategy Game": "Final Fantasy Tactics: The Ivalice Chronicles",
+        "Best Sports/Racing Game": "Mario Kart World",
+        "Best Multiplayer Game": "Arc Raiders",
+        "Best Adaptation": "The Last of Us: Season 2",
+        "Most Anticipated Game": "Grand Theft Auto VI",
+        "Content Creator of the Year": "MoistCr1TiKaL",
+        "Best Esports Game": "Counter-Strike 2",
+        "Best Esports Athlete": "Chovy (League of Legends)",
+        "Best Esports Team": "Team Vitality",
+        "Player's Voice": "Wuthering Waves",
+        "Innovation in Accessibility": "Doom: The Dark Ages",
+        "Game Changer Award": "Girls Make Games",
+    },
+    2024: {
         "Game of the Year": "Astro Bot",
         "Best Game Direction": "Astro Bot",
         "Best Narrative": "Metaphor: ReFantazio",
@@ -356,8 +390,10 @@ GAME_AWARDS_DATA = {
         "Most Anticipated Game": "Grand Theft Auto VI",
         "Content Creator of the Year": "CaseOh",
         "Best Esports Game": "League of Legends",
+        "Player's Voice": "Black Myth: Wukong",
+        "Innovation in Accessibility": "Prince of Persia: The Lost Crown",
     },
-    2024: {
+    2023: {
         "Game of the Year": "Baldur's Gate 3",
         "Best Game Direction": "Alan Wake 2",
         "Best Narrative": "Alan Wake 2",
@@ -384,7 +420,7 @@ GAME_AWARDS_DATA = {
         "Content Creator of the Year": "IronMouse",
         "Best Esports Game": "Valorant",
     },
-    2023: {
+    2022: {
         "Game of the Year": "Elden Ring",
         "Best Game Direction": "Elden Ring",
         "Best Narrative": "God of War Ragnarök",
@@ -410,7 +446,7 @@ GAME_AWARDS_DATA = {
         "Content Creator of the Year": "Ludwig",
         "Best Esports Game": "Valorant",
     },
-    2022: {
+    2021: {
         "Game of the Year": "It Takes Two",
         "Best Game Direction": "Deathloop",
         "Best Narrative": "Marvel's Guardians of the Galaxy",
@@ -436,7 +472,7 @@ GAME_AWARDS_DATA = {
         "Content Creator of the Year": "Dream",
         "Best Esports Game": "League of Legends",
     },
-    2021: {
+    2020: {
         "Game of the Year": "The Last of Us Part II",
         "Best Game Direction": "The Last of Us Part II",
         "Best Narrative": "The Last of Us Part II",
@@ -461,7 +497,7 @@ GAME_AWARDS_DATA = {
         "Content Creator of the Year": "Valkyrae",
         "Best Esports Game": "League of Legends",
     },
-    2020: {
+    2019: {
         "Game of the Year": "Sekiro: Shadows Die Twice",
         "Best Game Direction": "Death Stranding",
         "Best Narrative": "Disco Elysium",
@@ -486,7 +522,7 @@ GAME_AWARDS_DATA = {
         "Content Creator of the Year": "Shroud",
         "Best Esports Game": "League of Legends",
     },
-    2019: {
+    2018: {
         "Game of the Year": "God of War",
         "Best Game Direction": "God of War",
         "Best Narrative": "Red Dead Redemption 2",
@@ -557,7 +593,7 @@ def get_game_of_the_year_history() -> str:
     Get the complete history of Game of the Year winners from The Game Awards.
     
     Returns:
-        A chronological list of all Game of the Year winners from 2019-2025
+        A chronological list of all Game of the Year winners from 2018-2025
     """
     output = "🏆 The Game Awards - Game of the Year Winners:\n\n"
     
@@ -566,8 +602,8 @@ def get_game_of_the_year_history() -> str:
         output += f"  {year}: {winner}\n"
     
     output += "\n📊 Fun Facts:\n"
-    output += "  • FromSoftware has won GOTY twice (Sekiro 2020, Elden Ring 2023)\n"
-    output += "  • 2025 marked Astro Bot's surprise victory\n"
-    output += "  • Baldur's Gate 3 (2024) won with 6 total awards\n"
+    output += "  • Clair Obscur: Expedition 33 (2025) won a record 9 awards\n"
+    output += "  • FromSoftware has won GOTY twice (Sekiro 2019, Elden Ring 2022)\n"
+    output += "  • Baldur's Gate 3 (2023) won 6 total awards\n"
     
     return output
