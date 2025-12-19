@@ -49,7 +49,7 @@ def create_game_agent() -> Agent:
     """Create and configure the game recommendation agent"""
     
     model = BedrockModel(
-        model_id="anthropic.claude-sonnet-4-20250514-v1:0",
+        model_id="anthropic.claude-3-5-haiku-20241022-v1:0",
         region_name="us-east-1",
     )
     
