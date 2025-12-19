@@ -48,8 +48,9 @@ Remember: Your goal is to help users find their next favorite game!
 def create_game_agent() -> Agent:
     """Create and configure the game recommendation agent"""
     
+    # Using cross-region inference profile for Claude 3.5 Haiku
     model = BedrockModel(
-        model_id="anthropic.claude-3-5-haiku-20241022-v1:0",
+        model_id="us.anthropic.claude-3-5-haiku-20241022-v1:0",
         region_name="us-east-1",
     )
     
