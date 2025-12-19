@@ -18,5 +18,7 @@ agents:
     # Deployment type: code_deploy or container
     deployment_type: code_deploy
     
-    # AWS region
-    region: us-east-1
+    # AWS configuration (will be auto-filled if empty)
+    aws:
+      account: null
+      region: us-east-1
