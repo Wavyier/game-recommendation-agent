@@ -245,11 +245,29 @@ case "$COMMAND" in
                 echo "No ECR repositories found"
             fi
             
-            # 4. Delete IAM roles (optional - be careful)
+            # 4. Delete IAM roles
             echo ""
-            echo "4/4 IAM roles..."
-            echo "Skipping IAM role cleanup (manual review recommended)"
-            echo "To delete manually, check roles matching: *BedrockAgentCore*"
+            echo "4/4 Cleaning up IAM roles..."
+            IAM_ROLES=$(aws iam list-roles --query "Roles[?contains(RoleName, 'BedrockAgentCore')].RoleName" --output text 2>/dev/null)
+            if [ -n "$IAM_ROLES" ]; then
+                for role in $IAM_ROLES; do
+                    # Detach managed policies
+                    POLICIES=$(aws iam list-attached-role-policies --role-name "$role" --query "AttachedPolicies[].PolicyArn" --output text 2>/dev/null)
+                    for policy in $POLICIES; do
+                        aws iam detach-role-policy --role-name "$role" --policy-arn "$policy" 2>/dev/null
+                    done
+                    # Delete inline policies
+                    INLINE=$(aws iam list-role-policies --role-name "$role" --query "PolicyNames[]" --output text 2>/dev/null)
+                    for policy in $INLINE; do
+                        aws iam delete-role-policy --role-name "$role" --policy-name "$policy" 2>/dev/null
+                    done
+                    # Delete the role
+                    aws iam delete-role --role-name "$role" 2>/dev/null
+                    print_status "Deleted IAM role: $role"
+                done
+            else
+                echo "No IAM roles found"
+            fi
             
             echo ""
             print_status "Full cleanup complete!"
