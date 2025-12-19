@@ -177,6 +177,7 @@ case "$COMMAND" in
         echo ""
         
         setup_venv
+        check_agentcore_installed
         check_aws_credentials
         
         print_warning "This will delete your deployed agent and associated resources"
@@ -185,7 +186,73 @@ case "$COMMAND" in
         
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             agentcore destroy
-            print_status "Cleanup complete"
+            print_status "Agent cleanup complete"
+        else
+            echo "Cleanup cancelled"
+        fi
+        ;;
+    
+    "cleanup-all")
+        echo ""
+        echo "🧹 Full Cleanup - AgentCore + AWS Resources"
+        echo "============================================"
+        echo ""
+        
+        setup_venv
+        check_agentcore_installed
+        check_aws_credentials
+        
+        ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+        REGION="us-east-1"
+        
+        print_warning "This will delete ALL AgentCore resources including:"
+        echo "  • AgentCore agent"
+        echo "  • S3 bucket: bedrock-agentcore-${ACCOUNT_ID}-${REGION}"
+        echo "  • ECR repository: bedrock-agentcore-*"
+        echo "  • IAM roles: *BedrockAgentCore*"
+        echo ""
+        read -p "Are you sure? This cannot be undone! (y/N) " -n 1 -r
+        echo ""
+        
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            # 1. Destroy AgentCore agent
+            echo ""
+            echo "1/4 Destroying AgentCore agent..."
+            agentcore destroy 2>/dev/null || echo "No agent to destroy"
+            
+            # 2. Delete S3 bucket
+            echo ""
+            echo "2/4 Cleaning up S3 bucket..."
+            S3_BUCKET="bedrock-agentcore-${ACCOUNT_ID}-${REGION}"
+            if aws s3 ls "s3://${S3_BUCKET}" &>/dev/null; then
+                aws s3 rm "s3://${S3_BUCKET}" --recursive
+                aws s3 rb "s3://${S3_BUCKET}"
+                print_status "Deleted S3 bucket: ${S3_BUCKET}"
+            else
+                echo "S3 bucket not found or already deleted"
+            fi
+            
+            # 3. Delete ECR repositories
+            echo ""
+            echo "3/4 Cleaning up ECR repositories..."
+            ECR_REPOS=$(aws ecr describe-repositories --query "repositories[?starts_with(repositoryName, 'bedrock-agentcore')].repositoryName" --output text 2>/dev/null)
+            if [ -n "$ECR_REPOS" ]; then
+                for repo in $ECR_REPOS; do
+                    aws ecr delete-repository --repository-name "$repo" --force
+                    print_status "Deleted ECR repo: $repo"
+                done
+            else
+                echo "No ECR repositories found"
+            fi
+            
+            # 4. Delete IAM roles (optional - be careful)
+            echo ""
+            echo "4/4 IAM roles..."
+            echo "Skipping IAM role cleanup (manual review recommended)"
+            echo "To delete manually, check roles matching: *BedrockAgentCore*"
+            
+            echo ""
+            print_status "Full cleanup complete!"
         else
             echo "Cleanup cancelled"
         fi
@@ -227,15 +294,16 @@ case "$COMMAND" in
         echo "Usage: ./scripts/deploy.sh [command] [args]"
         echo ""
         echo "Commands:"
-        echo "  setup      Install dependencies and configure environment"
-        echo "  configure  Run agentcore configure for the agent"
-        echo "  dev        Start local development server"
-        echo "  invoke-dev Invoke the local dev agent (optional: prompt)"
-        echo "  launch     Deploy to Amazon Bedrock AgentCore Runtime"
-        echo "  invoke     Invoke the deployed agent (optional: prompt)"
-        echo "  status     Check deployment status"
-        echo "  cleanup    Delete deployed resources"
-        echo "  help       Show this help message"
+        echo "  setup       Install dependencies and configure environment"
+        echo "  configure   Run agentcore configure for the agent"
+        echo "  dev         Start local development server"
+        echo "  invoke-dev  Invoke the local dev agent (optional: prompt)"
+        echo "  launch      Deploy to Amazon Bedrock AgentCore Runtime"
+        echo "  invoke      Invoke the deployed agent (optional: prompt)"
+        echo "  status      Check deployment status"
+        echo "  cleanup     Delete deployed agent only"
+        echo "  cleanup-all Delete agent + S3 bucket + ECR repos"
+        echo "  help        Show this help message"
         echo ""
         echo "Examples:"
         echo "  ./scripts/deploy.sh setup"
