@@ -15,10 +15,10 @@ agents:
     runtime:
       python_version: "3.12"
       
-    # Deployment type: code_deploy or container
-    deployment_type: code_deploy
+    # Deployment type: 'container' or 'direct_code_deploy'
+    deployment_type: direct_code_deploy
     
-    # AWS configuration (will be auto-filled if empty)
+    # AWS configuration (account auto-filled from credentials)
     aws:
       account: null
       region: us-east-1
