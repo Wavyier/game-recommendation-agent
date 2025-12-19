@@ -1,0 +1,31 @@
+# Amazon Bedrock AgentCore Configuration
+# This file configures the agent for deployment to AgentCore Runtime
+
+project:
+  name: game-recommendation-agent
+  description: "Game recommendation agent powered by Metacritic and The Game Awards data"
+  version: "1.0.0"
+
+runtime:
+  # Entry point for the agent
+  entrypoint: main.py
+  
+  # Python version
+  python_version: "3.11"
+  
+  # Framework being used
+  framework: strands
+
+# AWS Configuration
+aws:
+  region: us-east-1
+
+# Model configuration
+model:
+  provider: bedrock
+  model_id: us.anthropic.claude-3-5-haiku-20241022-v1:0
+
+# Observability settings
+observability:
+  enabled: true
+  log_level: INFO

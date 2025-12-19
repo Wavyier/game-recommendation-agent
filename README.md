@@ -123,12 +123,57 @@ GameGuide: Based on your love of action RPGs, try...  (uses remembered preferenc
 
 ## Deploying to Production
 
-For production deployment, consider using **Amazon Bedrock AgentCore**:
+For production deployment, use **Amazon Bedrock AgentCore**:
 
-- **Runtime**: Serverless hosting with session isolation
-- **Memory**: Persistent context across conversations
-- **Gateway**: Convert tools to MCP-compatible endpoints
-- **Observability**: Monitor agent performance
+### Quick Deploy with Starter Toolkit
+
+```bash
+# Install the AgentCore starter toolkit
+pip install bedrock-agentcore-starter-toolkit
+
+# Test locally first
+agentcore dev
+
+# In another terminal, test the local agent
+agentcore invoke --dev '{"prompt": "What won GOTY 2025?"}'
+
+# Deploy to AgentCore Runtime
+agentcore launch
+
+# Test the deployed agent
+agentcore invoke '{"prompt": "What are the best RPGs on PC?"}'
+```
+
+### Invoke Programmatically
+
+```python
+import json
+import uuid
+import boto3
+
+agent_arn = "YOUR_AGENT_ARN"  # From agentcore launch output
+client = boto3.client('bedrock-agentcore')
+
+response = client.invoke_agent_runtime(
+    agentRuntimeArn=agent_arn,
+    runtimeSessionId=str(uuid.uuid4()),
+    payload=json.dumps({"prompt": "Recommend me a game"}).encode(),
+    qualifier="DEFAULT"
+)
+
+for chunk in response.get("response", []):
+    print(chunk.decode('utf-8'))
+```
+
+### AgentCore Features
+
+| Service       | What it does                                      |
+| ------------- | ------------------------------------------------- |
+| Runtime       | Serverless hosting, session isolation in microVMs |
+| Memory        | Short-term and long-term memory with strategies   |
+| Gateway       | Convert APIs to MCP-compatible tools              |
+| Identity      | Auth with existing IdPs (Cognito, Okta, etc.)     |
+| Observability | Tracing, debugging, and monitoring                |
 
 ## License
 
