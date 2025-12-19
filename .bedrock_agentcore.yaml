@@ -22,3 +22,5 @@ agents:
     aws:
       account: null
       region: us-east-1
+      # Auto-create execution role for deployment
+      auto_create_role: true
