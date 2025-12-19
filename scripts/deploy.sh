@@ -54,6 +54,21 @@ check_aws_credentials() {
     print_status "AWS credentials configured"
 }
 
+check_agentcore_installed() {
+    if ! command -v agentcore &> /dev/null; then
+        print_error "AgentCore CLI not installed"
+        echo "Run: ./scripts/deploy.sh setup"
+        exit 1
+    fi
+    print_status "AgentCore CLI installed"
+}
+
+configure_agent() {
+    echo "🔧 Configuring agent with AgentCore..."
+    agentcore configure -e main.py
+    print_status "Agent configured"
+}
+
 COMMAND="${1:-help}"
 
 case "$COMMAND" in
@@ -66,6 +81,7 @@ case "$COMMAND" in
         setup_venv
         install_deps
         check_aws_credentials
+        configure_agent
         
         echo ""
         print_status "Setup complete! Next steps:"
@@ -80,6 +96,7 @@ case "$COMMAND" in
         echo ""
         
         setup_venv
+        check_agentcore_installed
         check_aws_credentials
         
         echo "Starting AgentCore dev server on http://localhost:8080"
@@ -111,7 +128,14 @@ case "$COMMAND" in
         echo ""
         
         setup_venv
+        check_agentcore_installed
         check_aws_credentials
+        
+        # Run configure if .bedrock_agentcore.yaml doesn't have bedrock_agentcore section
+        if ! grep -q "bedrock_agentcore:" .bedrock_agentcore.yaml 2>/dev/null; then
+            echo "📝 Running initial configuration..."
+            configure_agent
+        fi
         
         print_warning "This will create AWS resources and may incur charges"
         read -p "Continue? (y/N) " -n 1 -r
@@ -174,9 +198,25 @@ case "$COMMAND" in
         echo ""
         
         setup_venv
+        check_agentcore_installed
         check_aws_credentials
         
         agentcore status 2>/dev/null || echo "No agent deployed yet"
+        ;;
+        
+    "configure")
+        echo ""
+        echo "🔧 Configuring Agent for AgentCore"
+        echo "==================================="
+        echo ""
+        
+        setup_venv
+        check_agentcore_installed
+        configure_agent
+        
+        echo ""
+        print_status "Configuration complete!"
+        echo "The .bedrock_agentcore.yaml file has been updated."
         ;;
         
     "help"|*)
@@ -188,6 +228,7 @@ case "$COMMAND" in
         echo ""
         echo "Commands:"
         echo "  setup      Install dependencies and configure environment"
+        echo "  configure  Run agentcore configure for the agent"
         echo "  dev        Start local development server"
         echo "  invoke-dev Invoke the local dev agent (optional: prompt)"
         echo "  launch     Deploy to Amazon Bedrock AgentCore Runtime"

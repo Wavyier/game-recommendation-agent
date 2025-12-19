@@ -7,20 +7,6 @@ agents:
   game-guide:
     name: game-guide
     description: "Game recommendation agent powered by Metacritic and The Game Awards data"
-    
-    # Entry point configuration
     entrypoint: main.py
-    
-    # Runtime settings
     runtime:
       python_version: "3.12"
-      
-    # Deployment type: 'container' or 'direct_code_deploy'
-    deployment_type: direct_code_deploy
-    
-    # AWS configuration (account auto-filled from credentials)
-    aws:
-      account: null
-      region: us-east-1
-      # Auto-create execution role for deployment
-      auto_create_role: true
