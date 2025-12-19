@@ -57,54 +57,19 @@ Remember: Your goal is to help users find their next favorite game!
 """
 
 
+def streaming_callback(**kwargs):
+    """Callback handler for streaming responses"""
+    if "data" in kwargs:
+        print(kwargs["data"], end="", flush=True)
+
+
 def create_game_agent(session_id: str | None = None) -> Agent:
-    """Create and configure the game recommendation agent
+    """Create and configure the game recommendation agent with streaming
     
     Args:
         session_id: Optional session ID for conversation persistence.
                    If provided, conversation history and state will be saved.
     """
-    # Using cross-region inference profile for Claude 3.5 Haiku
-    model = BedrockModel(
-        model_id="us.anthropic.claude-3-5-haiku-20241022-v1:0",
-        region_name="us-east-1",
-    )
-    
-    # Set up session manager for persistence (optional)
-    session_manager = None
-    if session_id:
-        sessions_dir = os.path.join(os.path.dirname(__file__), ".sessions")
-        session_manager = FileSessionManager(
-            session_id=session_id,
-            storage_dir=sessions_dir,
-        )
-    
-    agent = Agent(
-        model=model,
-        system_prompt=SYSTEM_PROMPT,
-        tools=[
-            search_games,
-            get_game_details,
-            get_top_games_by_platform,
-            get_recent_releases,
-            get_game_awards,
-            get_game_of_the_year_history,
-        ],
-        session_manager=session_manager,
-    )
-    
-    return agent
-
-
-def streaming_callback(**kwargs):
-    """Callback handler for streaming responses"""
-    # Print text chunks as they arrive
-    if "data" in kwargs:
-        print(kwargs["data"], end="", flush=True)
-
-
-def create_streaming_agent(session_id: str | None = None) -> Agent:
-    """Create agent with streaming callback for real-time output"""
     model = BedrockModel(
         model_id="us.anthropic.claude-3-5-haiku-20241022-v1:0",
         region_name="us-east-1",
@@ -168,7 +133,7 @@ def main():
     
     # Create agent with session persistence and streaming
     session_id = "default-session"
-    agent = create_streaming_agent(session_id=session_id)
+    agent = create_game_agent(session_id=session_id)
     
     print(f"📁 Session: {session_id} (conversation will be saved)\n")
     
@@ -187,7 +152,7 @@ def main():
                 # Start a new session
                 import uuid
                 session_id = f"session-{uuid.uuid4().hex[:8]}"
-                agent = create_streaming_agent(session_id=session_id)
+                agent = create_game_agent(session_id=session_id)
                 print(f"\n🆕 Started new session: {session_id}\n")
                 continue
             

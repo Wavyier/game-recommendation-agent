@@ -55,7 +55,7 @@ check_aws_credentials() {
 }
 
 check_agentcore_installed() {
-    if ! command -v agentcore &> /dev/null; then
+    if ! python -c "import bedrock_agentcore_starter_toolkit" &> /dev/null; then
         print_error "AgentCore CLI not installed"
         echo "Run: ./scripts/deploy.sh setup"
         exit 1
