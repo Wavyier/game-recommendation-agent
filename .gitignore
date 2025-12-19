@@ -32,3 +32,6 @@ presentation/
 
 # Session data
 .sessions/
+
+#Agentcore deployment files
+.bedrock_agentcore/

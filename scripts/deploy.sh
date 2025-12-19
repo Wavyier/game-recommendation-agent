@@ -172,28 +172,6 @@ case "$COMMAND" in
         
     "cleanup")
         echo ""
-        echo "🧹 Cleaning up AgentCore resources"
-        echo "==================================="
-        echo ""
-        
-        setup_venv
-        check_agentcore_installed
-        check_aws_credentials
-        
-        print_warning "This will delete your deployed agent and associated resources"
-        read -p "Continue? (y/N) " -n 1 -r
-        echo ""
-        
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            agentcore destroy
-            print_status "Agent cleanup complete"
-        else
-            echo "Cleanup cancelled"
-        fi
-        ;;
-    
-    "cleanup-all")
-        echo ""
         echo "🧹 Full Cleanup - AgentCore + AWS Resources"
         echo "============================================"
         echo ""
@@ -319,8 +297,7 @@ case "$COMMAND" in
         echo "  launch      Deploy to Amazon Bedrock AgentCore Runtime"
         echo "  invoke      Invoke the deployed agent (optional: prompt)"
         echo "  status      Check deployment status"
-        echo "  cleanup     Delete deployed agent only"
-        echo "  cleanup-all Delete agent + S3 bucket + ECR repos"
+        echo "  cleanup     Delete agent + S3 bucket + ECR repos + IAM roles"
         echo "  help        Show this help message"
         echo ""
         echo "Examples:"
