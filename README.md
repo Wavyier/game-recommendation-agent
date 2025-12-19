@@ -45,6 +45,9 @@ This project demonstrates how to build an AI agent using AWS's open-source **Str
 1. **Model-Driven Agents**: The LLM (Claude via Bedrock) decides when and how to use tools
 2. **Tool Integration**: Custom Python functions decorated with `@tool` become agent capabilities
 3. **Agentic Loop**: The SDK handles the reasoning → tool use → response cycle automatically
+4. **Streaming**: Real-time response output using callback handlers or async iterators
+5. **Session Management**: Conversation persistence across interactions using FileSessionManager
+6. **Agent State**: Key-value storage for user preferences and context
 
 ## Setup
 
@@ -78,13 +81,16 @@ python demo.py
 
 ```
 You: What are the best RPGs on PC?
-GameGuide: 🎮 Here are the top-rated RPGs on PC...
+GameGuide: 🎮 Here are the top-rated RPGs on PC...  (streams in real-time)
 
 You: Tell me about Elden Ring
 GameGuide: 🟢 Elden Ring - Metascore: 96/100...
 
-You: What new games should I play on PS5?
-GameGuide: 🆕 Here are recent PS5 releases with great reviews...
+You: I love action RPGs
+GameGuide: Got it! I'll remember that preference...
+
+You: What should I play next?
+GameGuide: Based on your love of action RPGs, try...  (uses remembered preference)
 ```
 
 ## Tools Available
@@ -102,6 +108,18 @@ GameGuide: 🆕 Here are recent PS5 releases with great reviews...
 
 - **Amazon Bedrock**: Hosts Claude model for agent reasoning
 - **Strands Agents SDK**: Open-source framework for building agents
+
+## Strands Features Used
+
+| Feature              | Description                                   |
+| -------------------- | --------------------------------------------- |
+| `@tool` decorator    | Turn Python functions into agent capabilities |
+| `BedrockModel`       | Connect to Claude via Amazon Bedrock          |
+| `FileSessionManager` | Persist conversations to local filesystem     |
+| `callback_handler`   | Stream responses in real-time                 |
+| `stream_async()`     | Async iterator for streaming events           |
+| `agent.state`        | Key-value storage for preferences             |
+| `agent.messages`     | Access conversation history                   |
 
 ## Deploying to Production
 

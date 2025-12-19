@@ -29,3 +29,6 @@ htmlcov/
 
 # Presentation (personal notes)
 presentation/
+
+# Session data
+.sessions/
