@@ -11,7 +11,7 @@ Features demonstrated:
 """
 
 import asyncio
-from agent import create_game_agent, create_streaming_agent, run_with_async_streaming
+from agent import create_game_agent, run_with_async_streaming
 
 
 def run_basic_demo():
@@ -39,7 +39,7 @@ def run_streaming_demo():
     print("=" * 60)
     
     # Create agent with streaming callback
-    agent = create_streaming_agent()
+    agent = create_game_agent()
     
     query = "What are the top 3 RPGs on PC?"
     print(f"\n📝 Query: {query}")
@@ -76,7 +76,7 @@ def run_session_demo():
     print("=" * 60)
     
     # Create agent with session persistence
-    agent = create_streaming_agent(session_id="demo-session")
+    agent = create_game_agent(session_id="demo-session")
     
     conversations = [
         "I really love RPGs and action games",
@@ -102,7 +102,7 @@ def run_tool_selection_demo():
     print("   Watch the agent choose different tools automatically")
     print("=" * 60)
     
-    agent = create_streaming_agent()
+    agent = create_game_agent()
     
     queries = [
         ("Game Awards query", "Who won Best RPG at The Game Awards 2025?"),
@@ -118,7 +118,7 @@ def run_tool_selection_demo():
         print("\n")
         
         # Reset for next query (fresh context)
-        agent = create_streaming_agent()
+        agent = create_game_agent()
 
 
 def main():
